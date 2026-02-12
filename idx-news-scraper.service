@@ -1,0 +1,14 @@
+[Unit]
+Description=IDX News Scraper
+After=network.target
+
+[Service]
+Type=simple
+User=nvn
+WorkingDirectory=/home/nvn/idx-scrapper/news-scraper
+ExecStart=/home/nvn/idx-scrapper/news-scraper/venv/bin/python news_scraper.py --daemon
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
