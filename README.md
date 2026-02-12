@@ -1,30 +1,25 @@
-# IDX News Scraper 🚀
+# IDX News Scraper
 
 Automated news scraper for Indonesian Stock Exchange (IDX) listed companies. Fetches news from multiple Indonesian financial news sources using stock ticker tags.
 
-> **Newly Updated:** Now features **Machine Learning-based Filter** to remove irrelevant news! 🧠✨
-
 ## Features
 
-- 🧠 **ML Keyword Filtering** - Smart analysis of news content to distinguish between relevant stock news and noise (e.g., distinguishing "Gempa Bumi" from $BUMI stock). Uses context-aware positive/negative keyword scoring.
-- 🔄 **Tiered scraping** - Hot/Active/Cold stock classification for efficient fetching
-- 📰 **5 News Sources** - Kontan, CNBC Indonesia, Investor.id, IDX Channel, Kompas
-- 🕒 **Smart Time Parsing** - Accurately parses relative times (e.g., "5 minutes ago") into precise timestamps.
-- 🖼️ **Real Image Extraction** - Handles lazy-loading images and filters out placeholders automatically.
-- 🔗 **Playwright-based** - Connects to existing browser to avoid anti-bot detection
-- 💾 **Deduplication** - Hash-based detection to avoid duplicate articles
-- ⏰ **Scheduled runs** - Configurable timing for different stock tiers
+- **Keyword Filtering**: Uses a dictionary-based context filter to distinguish between relevant stock news and noise (e.g., distinguishing "Gempa Bumi" from $BUMI stock).
+- **Tiered Scraping**: Categorizes stocks into Hot (LQ45), Active (IDX80), and Cold tiers for efficient scheduling.
+- **Multiple Sources**: Scrapes from Kontan, CNBC Indonesia, Investor.id, IDX Channel, and Kompas.
+- **smart Time Parsing**: Converts relative times (e.g., "5 minutes ago") into precise timestamps.
+- **Image Extraction**: Handles lazy-loading images and filters out placeholders.
+- **Anti-Bot Detection**: Uses Playwright to connect to an existing browser instance via CDP.
+- **Deduplication**: Hash-based detection to prevent duplicate articles.
 
-## Machine Learning Filtering 🧠
+## Keyword Filtering Logic
 
-The scraper uses a `keywords.json` dictionary to filter noise for "Risky Stocks" (stocks with common words as names like `BUMI`, `BUKA`, `GOTO`, `DEWA`).
+The scraper implements a filtering system to reduce noise for stocks with common names (e.g., `BUMI`, `BUKA`, `GOTO`, `DEWA`).
 
-**Logic:**
-1. **Negative Check**: If an article contains a "negative" word (e.g., *gempa, warung*)...
-2. **Context Check**: It looks for "positive" financial context words (e.g., *saham, investor, capital*).
-3. **Decision**:
-   - ❌ **No Context?** -> Skipped (Irrelevant noise)
-   - ✅ **Has Context?** -> Kept (Relevant news)
+It checks the article title and summary against a `keywords.json` file:
+1.  **Negative Check**: Detects if the text contains non-stock keywords (e.g., *gempa, warung*).
+2.  **Context Check**: If a negative word is found, it looks for positive financial context words (e.g., *saham, investor, capital*).
+3.  **Result**: Articles with negative words but no financial context are skipped.
 
 ## News Sources
 
